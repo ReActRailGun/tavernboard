@@ -52,8 +52,12 @@ function Invoke-GnoCall {
         '-insecure-password-stdin',
         $Who.key_name
     )
-    $out = $Who.passphrase | & $gnokey @cmdArgs 2>&1
-    if ($LASTEXITCODE -ne 0) { throw "Call $Func failed: $out" }
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $out = ($Who.passphrase | & $gnokey @cmdArgs 2>&1) | Out-String
+    $code = $LASTEXITCODE
+    $ErrorActionPreference = $prev
+    if ($code -ne 0) { throw "Call $Func failed (exit $code): $out" }
     Write-Host "  OK $Func ($($Who.key_name))" -ForegroundColor Green
     Start-Sleep -Seconds 2
 }
