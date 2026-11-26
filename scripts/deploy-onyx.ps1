@@ -17,9 +17,9 @@ param(
 
     [string]$ChainID = 'onyx-1',
     [string]$Remote = 'https://rpc.onyx.testnets.gno.land:443',
-    [string]$GasFee = '1000000ugnot',
-    [int64]$GasWanted = 40000000,
-    [string]$MaxDeposit = '50000000ugnot',
+    [string]$GasFee = '500000ugnot',
+    [int64]$GasWanted = 150000000,
+    [string]$MaxDeposit = '25000000ugnot',
     [switch]$DryRun
 )
 

@@ -14,6 +14,22 @@ Verified live network configuration as of **November 26, 2026**:
 
 ---
 
+## Live Deployed Instance (Official Submission)
+
+| Artifact | Path / URL | Onyx Block | Status |
+|---|---|---|---|
+| **Deployer Account** | `g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc` | — | Funded via official `faucet-agent.onyx.testnets.gno.land` |
+| **Pure Package (`tavernkit`)** | `gno.land/p/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernkit` | `#1,424,620` | Submitted (`inert`, awaiting `gpao` activation) |
+| **Stateful Realm (`tavernboard`)** | `gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard` | `#1,424,623` | Submitted (`inert`, awaiting `gpao` activation) |
+| **Live `gnoweb` URL** | `https://onyx.testnets.gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard` | — | Activates automatically upon `gpao` `MsgEnablePackage` |
+
+> **About Onyx `inert` Policy & `gpao`**: On `onyx-1` (`vm:p:code_submission_policy = "inert"`), every post-genesis `addpkg` is parked on-chain (`vm/qinertpaths`) until the Onyx **Package-Approvals Oracle (`gpao`)** verifies imports/types off-chain and broadcasts `MsgEnablePackage`. Check live status anytime with:
+> ```powershell
+> gnokey query vm/qpkgmeta_json -data "gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard" -remote https://rpc.onyx.testnets.gno.land:443
+> ```
+
+---
+
 ## Step 1: Create or Select Your `gnokey` Account
 
 Use the compiled `gnokey` binary (either in `PATH` or `..\..\tools\gno-bin\gnokey.exe`):

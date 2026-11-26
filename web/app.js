@@ -11,7 +11,7 @@ const state = {
   statusFilter: "ALL",
   selectedId: 1,
   rpcUrl: "https://rpc.onyx.testnets.gno.land:443",
-  realmPath: "gno.land/r/tavernboard/tavernboard",
+  realmPath: "gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard",
   bounties: [
     {
       id: 1,

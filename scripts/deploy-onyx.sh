@@ -15,9 +15,9 @@ DRY_RUN="${3:-}"
 
 CHAIN_ID="${CHAIN_ID:-onyx-1}"
 REMOTE="${REMOTE:-https://rpc.onyx.testnets.gno.land:443}"
-GAS_FEE="${GAS_FEE:-1000000ugnot}"
-GAS_WANTED="${GAS_WANTED:-40000000}"
-MAX_DEPOSIT="${MAX_DEPOSIT:-50000000ugnot}"
+GAS_FEE="${GAS_FEE:-500000ugnot}"
+GAS_WANTED="${GAS_WANTED:-150000000}"
+MAX_DEPOSIT="${MAX_DEPOSIT:-25000000ugnot}"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 P_PATH="gno.land/p/${NAMESPACE}/tavernkit"

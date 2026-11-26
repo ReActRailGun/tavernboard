@@ -4,6 +4,12 @@
 
 Built by **ReActRailGun** for the **Gnome Tavern Hackathon | Gno.land**.
 
+### Live Onyx Testnet (`onyx-1`) Deployment
+
+- **Realm (`gnoweb`)**: [`https://onyx.testnets.gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard`](https://onyx.testnets.gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard) (`addpkg` block `#1,424,623`)
+- **Pure Package (`tavernkit`)**: [`https://onyx.testnets.gno.land/p/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernkit`](https://onyx.testnets.gno.land/p/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernkit) (`addpkg` block `#1,424,620`)
+- **Network**: `onyx-1` (`https://rpc.onyx.testnets.gno.land:443`, Gno `v1.8.0-rc.1`)
+
 ---
 
 ## Why TavernBoard?

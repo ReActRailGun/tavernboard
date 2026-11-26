@@ -21,8 +21,11 @@
 ### Public Code Repository Link
 `https://github.com/reactrailgun/tavernboard`
 
-### Live Testnet Deployment Link (fill in after running `scripts/deploy-onyx.ps1`)
-`https://onyx.testnets.gno.land/r/<YOUR_G1_ADDRESS>/tavernboard`
+### Live Testnet Deployment Link (Verified on `onyx-1`)
+`https://onyx.testnets.gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard`
+
+- **Pure Package (`tavernkit`)**: `https://onyx.testnets.gno.land/p/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernkit` (Onyx block `#1,424,620`, tx `hLCMIBWT23rIUwBq0nXIvIlwn77Zm3sgIDYPsfWkIBg=`)
+- **Stateful Realm (`tavernboard`)**: `https://onyx.testnets.gno.land/r/g1uhez53ghm94hh8m4ezxs82240ql87vfppjq0mc/tavernboard` (Onyx block `#1,424,623`, tx `b/48MXK3tp3ZYE+MWMMLBDJgmDPQt9OafDZ3Kzi2i7c=`)
 
 ### Full Project Description (Paste into DoraHacks BUIDL Description)
 
