@@ -1,0 +1,11 @@
+# Never commit keys, wallets, or local temp build artifacts
+*.key
+*.pem
+*.seed
+*mnemonic*
+.env
+.env.*
+.DS_Store
+Thumbs.db
+tmp/
+dist/

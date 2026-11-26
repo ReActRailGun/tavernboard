@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TavernBoard — On-Chain Quest Escrow &amp; Guild Reputation on Gno.land</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-crest" aria-hidden="true">TB</div>
+      <div>
+        <h1>TavernBoard</h1>
+        <p class="subtitle">Sub-Realm Escrow Vaults &middot; Stake-Backed Quorums &middot; Composable Reputation</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="mode-switch" role="group" aria-label="Data source mode">
+        <button id="btnModeSandbox" class="btn-pill active" type="button">Interactive Sandbox</button>
+        <button id="btnModeOnyx" class="btn-pill" type="button">Live Onyx RPC</button>
+      </div>
+      <button id="btnWallet" class="btn-primary" type="button">Connect Adena Wallet</button>
+    </div>
+  </header>
+
+  <section id="rpcBar" class="rpc-bar hidden">
+    <label>
+      <span>Onyx RPC</span>
+      <input id="rpcUrl" type="text" value="https://rpc.onyx.testnets.gno.land:443" />
+    </label>
+    <label class="grow">
+      <span>Deployed Realm Path</span>
+      <input id="realmPath" type="text" placeholder="gno.land/r/g1youraddress.../tavernboard" />
+    </label>
+    <button id="btnSyncOnyx" class="btn-secondary" type="button">Query On-Chain State</button>
+    <span id="rpcStatus" class="status-chip">Idle</span>
+  </section>
+
+  <main class="container">
+    <section class="stats-grid" id="statsGrid"></section>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="board" type="button">Quest Board</button>
+      <button class="tab" data-tab="post" type="button">+ Post Quest</button>
+      <button class="tab" data-tab="guild" type="button">Guild Hall &amp; Crests</button>
+      <button class="tab" data-tab="gnoweb" type="button">gnoweb Render Preview</button>
+      <button class="tab" data-tab="cli" type="button">gnokey CLI Builder</button>
+    </nav>
+
+    <section id="tab-board" class="tab-panel active">
+      <div class="toolbar">
+        <div class="filter-pills" id="statusFilters">
+          <button class="filter active" data-status="ALL" type="button">All</button>
+          <button class="filter" data-status="OPEN" type="button">Open</button>
+          <button class="filter" data-status="CLAIMED" type="button">Claimed</button>
+          <button class="filter" data-status="IN REVIEW" type="button">In Review</button>
+          <button class="filter" data-status="DISPUTED" type="button">Disputed</button>
+          <button class="filter" data-status="COMPLETED" type="button">Completed</button>
+          <button class="filter" data-status="ARCHIVED" type="button">Archived</button>
+        </div>
+        <span class="hint" id="modeHint">Sandbox simulates GnoVM v1.8 sub-realm vaults &amp; slashing locally.</span>
+      </div>
+      <div class="split-layout">
+        <div class="quest-list" id="questList"></div>
+        <aside class="detail-pane" id="detailPane"></aside>
+      </div>
+    </section>
+
+    <section id="tab-post" class="tab-panel">
+      <div class="card form-card">
+        <h2>Post a Multi-Milestone Funded Quest</h2>
+        <p class="muted">
+          Every quest mints an isolated Gno.land v1.8 sub-realm vault
+          <code>cur.Sub("escrow/&lt;id&gt;")</code> funded via <code>BankerTypeOriginSend</code>.
+        </p>
+        <form id="postForm" class="quest-form">
+          <div class="form-row">
+            <label>
+              <span>Quest Title</span>
+              <input id="fTitle" type="text" required maxlength="120" placeholder="e.g. Build GRC721 Auction Realm" />
+            </label>
+            <label>
+              <span>Reward Pool (GNOT)</span>
+              <input id="fReward" type="number" step="0.1" min="0.1" value="5" required />
+            </label>
+          </div>
+          <label>
+            <span>Acceptance Criteria &amp; Summary</span>
+            <textarea id="fSummary" rows="3" required maxlength="1200" placeholder="Describe deliverables, test coverage targets, and gnoweb routes..."></textarea>
+          </label>
+          <div class="form-row">
+            <label>
+              <span>Tags (comma-separated)</span>
+              <input id="fTags" type="text" value="realm,escrow,gno" />
+            </label>
+            <label>
+              <span>Milestone Split (must sum to 10000 bps)</span>
+              <input id="fMilestones" type="text" value="Spec & Tests:3000,Core Realm:5000,Render & Docs:2000" required />
+            </label>
+          </div>
+          <div class="form-row three">
+            <label>
+              <span>Deadline (days)</span>
+              <input id="fDeadline" type="number" min="1" max="365" value="14" required />
+            </label>
+            <label>
+              <span>Min Reviewer Stake (ugnot)</span>
+              <input id="fStake" type="number" min="10000" step="10000" value="50000" required />
+            </label>
+            <label>
+              <span>Dispute Quorum (reviewers)</span>
+              <input id="fQuorum" type="number" min="1" max="7" value="3" required />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">Mint Sub-Realm Escrow &amp; Post Quest</button>
+            <button id="btnGenPostCli" class="btn-secondary" type="button">Copy gnokey Command</button>
+          </div>
+          <pre id="postPreviewCmd" class="code-box hidden"></pre>
+        </form>
+      </div>
+    </section>
+
+    <section id="tab-guild" class="tab-panel">
+      <div class="card">
+        <h2>Guild Hall — On-Chain Reputation &amp; SVG Crests</h2>
+        <p class="muted">
+          Deterministic integer XP &amp; Craft Tiers computed by <code>p/tavernboard/tavernkit</code>
+          and queryable cross-realm via <code>tavernboard.HasCraftTier(addr, tier)</code>.
+        </p>
+        <div id="crestGrid" class="crest-grid"></div>
+      </div>
+    </section>
+
+    <section id="tab-gnoweb" class="tab-panel">
+      <div class="card">
+        <div class="gnoweb-header">
+          <div>
+            <h2>gnoweb <code>Render(path)</code> Output Preview</h2>
+            <p class="muted">Inspect raw or live ABCI <code>vm/qrender</code> Markdown output served directly by the realm.</p>
+          </div>
+          <div class="route-bar">
+            <input id="renderRouteInput" type="text" value="" placeholder="route: '' or 'bounty/1' or 'guild' or 'guide'" />
+            <button id="btnFetchRender" class="btn-secondary" type="button">Render Route</button>
+          </div>
+        </div>
+        <pre id="renderOutput" class="code-box tall"></pre>
+      </div>
+    </section>
+
+    <section id="tab-cli" class="tab-panel">
+      <div class="card">
+        <h2><code>gnokey</code> Transaction Builder (Onyx <code>onyx-1</code>)</h2>
+        <p class="muted">Ready-to-run CLI snippets for deploying and interacting with TavernBoard on <code>onyx-1</code>.</p>
+        <div id="cliSnippets" class="cli-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <footer class="footer">
+    <span>Built for <strong>Gnome Tavern Hackathon | Gno.land</strong> &middot; Target network: <code>onyx-1</code> (Gno v1.8.0)</span>
+    <span>Pure packages: <code>p/.../tavernkit</code> &middot; Stateful realm: <code>r/.../tavernboard</code></span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
