@@ -1,8 +1,12 @@
 # TavernBoard
 
+![TavernBoard Key Art](poster_flow.jpg)
+
 **On-chain micro-bounty escrow, stake-backed reviewer quorums, and composable builder reputation for Gno.land (v1.8 / Onyx & Mainnet).**
 
 Built by **ReActRailGun** for the **Gnome Tavern Hackathon | Gno.land**.
+
+- **Cinematic Walkthrough Video (`54s`, 720p H.264/AAC)**: [`tavernboard-demo.mp4`](tavernboard-demo.mp4)
 
 ### Live Onyx Testnet (`onyx-1`) Deployment
 
